@@ -1,10 +1,7 @@
 package com.example.calling.authentication.user.document;
 
 import com.example.calling.baseEntity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
@@ -15,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@Setter
 public class UserDocument extends BaseEntity {
     private String username;
     private String password;

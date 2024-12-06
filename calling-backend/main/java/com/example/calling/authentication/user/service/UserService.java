@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -48,4 +51,26 @@ public class UserService implements UserDetailsService {
         return UserDto.dto(userComponent.userLogin());
     }
 
+    public UserDto friend(String friendId){
+        return UserDto.dto(userComponent.userById(friendId));
+    }
+    public List<UserDto> allFriends(){
+        List<UserDto> list = new ArrayList<>();
+        for (UserDocument user: userRepo.findAll()) {
+            if (!user.getId().equals(userComponent.userLogin().getId())){
+                list.add(UserDto.dto(user));
+            }
+        }
+        return list;
+    }
+
+    public UserDto changePw (UserRequest dto){
+        if (!dto.getPwCheck().equals(dto.getNewPw()))
+            throw new CustomException(HttpStatus.CONFLICT, "New password and password confirm do not match!!!");
+        UserDocument user = userComponent.userLogin();
+        if (!encoder.matches(dto.getPassword(), user.getPassword()))
+            throw new CustomException(HttpStatus.UNAUTHORIZED, "Your current password is wrong!!!");
+        user.setPassword(encoder.encode(dto.getNewPw()));
+        return UserDto.dto(user);
+    }
 }
