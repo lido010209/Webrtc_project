@@ -16,6 +16,22 @@ class UserService{
             }
         })
     }
+
+    friend(token, friendId){
+        return axios.get(`/users/${friendId}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+    }
+
+    allFriends(token){
+        return axios.get('/users/all-friends', {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+    }
 }
 
 export default new UserService()
