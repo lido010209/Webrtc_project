@@ -14,7 +14,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +76,30 @@ public class UserService implements UserDetailsService {
         if (!encoder.matches(dto.getPassword(), user.getPassword()))
             throw new CustomException(HttpStatus.UNAUTHORIZED, "Your current password is wrong!!!");
         user.setPassword(encoder.encode(dto.getNewPw()));
-        return UserDto.dto(user);
+        return UserDto.dto(userRepo.save(user));
+    }
+
+    public UserDto avatar(MultipartFile avatar){
+        UserDocument user = userComponent.userLogin();
+        String directory = "/profile/"+user.getId() + "/";
+        try {
+            Files.createDirectories(Path.of(directory));
+        } catch (IOException e){
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Fail to create directory");
+        }
+        String fileName = avatar.getOriginalFilename();
+        String[] eles = fileName.split("\\.");
+        String extension = eles[eles.length-1];
+
+        String path = directory + "avatar."+ extension;
+        try {
+            avatar.transferTo(Path.of(path));
+        } catch (IOException e){
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Fail to transfer image");
+        }
+
+        String url = String.format("/static/%s/avatar.%s", user.getId(), extension);
+        user.setAvatar(url);
+        return UserDto.dto(userRepo.save(user));
     }
 }
