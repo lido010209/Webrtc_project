@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class CallHttp {
     private final HttpService callService;
     private final SocketService socketService;
-    @PostMapping
-    public CallResponse newCall(@RequestBody CallRequest request){
-        return socketService.startCall(request);
-    }
+//    @PostMapping
+//    public CallResponse newCall(@RequestBody CallRequest request){
+//        return socketService.startCall(request);
+//    }
     @DeleteMapping("{callId}")
     public void deleteCall(@PathVariable("callId") String callId){
         callService.cancelCall(callId);

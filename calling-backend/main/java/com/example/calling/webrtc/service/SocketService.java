@@ -52,6 +52,7 @@ public class SocketService {
         return CallResponse.dto(callRepo.save(call));
     }
 
+
     public CallResponse hangup(String callId){
         Call call = callRepo.findById(callId).orElseThrow(
                 ()-> new CustomException(HttpStatus.BAD_REQUEST, "No exist this calling!!!")

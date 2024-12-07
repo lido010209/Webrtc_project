@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         UserDocument user= UserDocument.builder()
                 .username(dto.getUsername())
                 .password(encoder.encode(dto.getPassword()))
-                .avatar("/static/visual/user.png")
+                .avatar("@/assets/user/user.png")
                 .name(dto.getName())
                 .build();
         user.getAuthorityRoles().add("ROLE_USER");
