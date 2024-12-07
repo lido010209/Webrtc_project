@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid ms-3 me-3">
-      <a class="navbar-brand" href="#"
+      <a class="navbar-brand" href="/lu"
         ><img
           src="@/assets/navbar/logo.png"
           class="img-fluid"
@@ -21,12 +21,12 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item me-2">
-            <a class="nav-link active" aria-current="page" href="#"
+            <a class="nav-link active" aria-current="page" href="/lu"
               ><i class="fa-solid fa-globe me-1"></i> 루나 우주</a
             >
           </li>
           <li class="nav-item me-2">
-            <a class="nav-link" href="#"
+            <a class="nav-link" href="/lu/friends"
               ><i class="fa-solid fa-users me-1"></i> 친구</a
             >
           </li>
@@ -56,7 +56,7 @@
             </a>
           <div :class="{ 'd-none': isVisible }" class="position-absolute end-0 top-100 rounded bg-light-subtle mt-3" style="width: 150px" @mouseleave="avatarOut">
             <div
-              className="d-flex align-items-center justify-content-center border-bottom p-2"
+              class="d-flex align-items-center justify-content-center border-bottom p-2"
             >
               <span><i class="fa-solid fa-circle-user fa-lg me-2"></i></span>
               <span>{{nameLogin}}</span>
